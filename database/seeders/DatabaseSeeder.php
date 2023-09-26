@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,11 +14,46 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        User::factory()->create([
+            'name' => 'Leandro Barbosa',
+            'email' => 'leandro@email.com',
+        ]);
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        User::factory()->create([
+            'name' => 'Paulo Trigo',
+            'email' => 'paulo@email.com',
+        ]);
+
+        User::factory()->create([
+            'name' => 'Benjamin Anderson',
+            'email' => 'benjamin@email.com',
+        ]);
+
+        User::factory()->create([
+            'name' => 'Eduardo Goes',
+            'email' => 'eduardo@email.com',
+        ]);
+
+        User::factory()->create([
+            'name' => 'Laion Silva',
+            'email' => 'laion@email.com',
+        ]);
+
+        User::factory()->create([
+            'name' => 'Saulo Sampaio',
+            'email' => 'saulo@email.com',
+        ]);
+
+        User::factory()->create([
+            'name' => 'Diego Anjos',
+            'email' => 'diego@email.com',
+        ]);
+
+        User::factory()->create([
+            'name' => 'Victor Martinez',
+            'email' => 'victor@email.com',
+        ]);
+
+        User::factory(10)->create();
     }
 }
