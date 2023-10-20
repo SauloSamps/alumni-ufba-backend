@@ -21,7 +21,12 @@ class UserFactory extends Factory
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
+            'cpf' => substr(md5(uniqid()), 0, 10),
+            'grad_year' => fake()->numberBetween(2000,2023),
+            'city' => fake()->city(),
+            'state' => fake()->state(),
+            'country' => fake()->country(),
+            'description' => fake()->text(100),
         ];
     }
 
