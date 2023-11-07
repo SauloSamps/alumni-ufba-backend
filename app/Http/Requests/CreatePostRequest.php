@@ -2,12 +2,11 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\CheckUserUFBARule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
 
-class CreateAccountRequest extends FormRequest
+class CreatePostRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,22 +24,9 @@ class CreateAccountRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string'],
-            'email' => ['required', 'email', 'unique:users,email'],
-            'password' => ['required', 'string'],
-            'cpf' => [
-                'required',
-                'unique:users,cpf',
-                'string',
-                new CheckUserUFBARule
-            ],
-            'course_id' => ['required','exists:courses,id'],
-            'grad_year' => ['integer'],
-            'city' => ['string'],
-            'state' => ['string'],
-            'country' => ['string'],
-            'description' => ['string'],
-
+            'title' => ['required', 'string'],
+            'content' => ['required', 'string'],
+            'category_id' => ['exists:categories,id']
         ];
     }
 
@@ -48,9 +34,7 @@ class CreateAccountRequest extends FormRequest
     {
         return [
             'required' => 'O campo :attribute é obrigatório',
-            'email.unique' => 'O email já está cadastrado',
-            'cpf.unique' => 'O CPF já está cadastrado',
-            'course_id.exists' => 'O curso não existe ou não está cadastrado no sistema',
+            'category_id.exists' => 'A categoria não existe ou não está cadastrada',
 
         ];
     }
