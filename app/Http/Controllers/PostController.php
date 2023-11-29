@@ -64,7 +64,19 @@ class PostController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required',
+            'body' => 'required'
+        ]);
+        $post = Post::find($id);
+        $post->title = $request->input['title'];
+        $post->content = $request->input['content'];
+        $post->category_id = $request->input['category_id'];
+        $post->save();
+
+        return response()->json([
+            'message' => 'Tópico atualizado com sucesso'
+        ]);
     }
 
     /**
