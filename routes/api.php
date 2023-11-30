@@ -41,3 +41,5 @@ Route::group([
 ], function ($router) {
     Route::post('create', [PostController::class, 'create']);
 });
+
+Route::resource('post', 'App\Http\Controllers\PostController');
