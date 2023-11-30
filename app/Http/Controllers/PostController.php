@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreatePostRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -66,7 +67,7 @@ class PostController extends Controller
     {
         $this->validate($request, [
             'title' => 'required',
-            'body' => 'required'
+            'content' => 'required'
         ]);
         $post = Post::find($id);
         $post->title = $request->input['title'];
@@ -84,6 +85,17 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $post = Post::find($id);
+        if (Auth::check() && $post->user_id === Auth::id()) {
+            $post->delete();
+            return response()->json([
+                'message' => 'Tópico removido com sucesso'
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'Você não tem permissão para alterar este tópico'
+            ]);
+        }
+        
     }
 }
