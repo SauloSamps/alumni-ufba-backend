@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\EventController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -43,3 +44,4 @@ Route::group([
 });
 
 Route::resource('post', 'App\Http\Controllers\PostController');
+Route::resource('event', 'App\Http\Controllers\EventController');
