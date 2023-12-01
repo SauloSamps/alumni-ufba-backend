@@ -18,9 +18,25 @@ class EventController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required',
+            'date' => 'required',
+            'where' => 'required',
+            'description' => 'required',
+        ]);
+        $event = new Event;
+        $event->title = $request->input('title');
+        $event->date = $request->input('date');
+        $event->where = $request->input('where');
+        $event->description = $request->input('description');
+        $event->user_id = auth()->user()->id;
+        $event->save();
+
+        return response()->json([
+            'message' => 'Evento criado com sucesso'
+        ]);
     }
 
     /**
@@ -60,6 +76,13 @@ class EventController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $post = Event::find($id);
+        
+        if (Auth::check() && $post->user_id === Auth::id()) {
+            $post->delete();
+            return redirect('/posts')->with('success', 'Post Removed');
+        } else {
+            return redirect()->route('posts.index')->with('error', 'You do not have permission to delete this post.');
+        }
     }
 }
