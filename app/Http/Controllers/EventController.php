@@ -68,7 +68,23 @@ class EventController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required',
+            'date' => 'required',
+            'where' => 'required',
+            'description' => 'required',
+        ]);
+        $event = Event::find($id);
+        $event->title = $request->input('title');
+        $event->date = $request->input('date');
+        $event->where = $request->input('where');
+        $event->description = $request->input('description');
+        $event->user_id = auth()->user()->id;
+        $event->save();
+
+        return response()->json([
+            'message' => 'Evento atualizado com sucesso'
+        ]);
     }
 
     /**
@@ -76,13 +92,17 @@ class EventController extends Controller
      */
     public function destroy(string $id)
     {
-        $post = Event::find($id);
+        $event = Event::find($id);
         
-        if (Auth::check() && $post->user_id === Auth::id()) {
-            $post->delete();
-            return redirect('/posts')->with('success', 'Post Removed');
+        if (Auth::check() && $event->user_id === Auth::id()) {
+            $event->delete();
+            return response()->json([
+                'message' => 'Evento removido com sucesso'
+            ]);
         } else {
-            return redirect()->route('posts.index')->with('error', 'You do not have permission to delete this post.');
+            return response()->json([
+                'message' => 'Você não tem permissão para remover este evento'
+            ]);
         }
     }
 }
